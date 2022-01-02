@@ -29,7 +29,7 @@ class Data:
     def __init__(self, file, target, sample=False, n_samples=None, frac=None):
         self.file = file
         self. sample = sample
-        self.n_sample = n_sample
+        self.n_samples = n_samples
         self.target = target
         self.frac = frac
 
