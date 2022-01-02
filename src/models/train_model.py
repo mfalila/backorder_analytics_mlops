@@ -37,6 +37,12 @@ class Models(object):
     """
     prepared_features = np.array([])
     target_df = np.array([])
+    test_prepared_features = np.array([])
+    test_target_df = np.array([])
+    model = None
+    history = None
+    best_score = None
+    test_score = None
 
     def __init__(self, epochs, batch_size, dropout, verbose,
                  checkpoint, model_file, weight_file):
@@ -61,9 +67,13 @@ class Models(object):
         dropout = config["train_and_evaluate_config"]["dropout"]
         verbose = config["train_and_evaluate_config"]["verbose"]
         transformed_data = config["transform_data_config"]["transformed_data"]
+        test_transformed_data = config["transform_data_config"]["transformed_test_data"]
         transformed_target = config["transform_data_config"]["transformed_target"]
+        test_transformed_target = config["transform_data_config"]["transformed_test_target"]
         Models.prepared_features = load(transformed_data)
+        Models.test_prepared_features = load(test_transformed_data)
         Models.target_df = load(transformed_target)
+        Models.test_target_df = load(test_transformed_target)
 
         print("debug:1")
         print(Models.target_df)
@@ -88,28 +98,28 @@ class Models(object):
                verbose-1 for yes, else 0 for No
         """
         # instantiate sequential object
-        model = Sequential()
+        Models.model = Sequential()
 
-        if dropout == True:
+        if dropout:
             # define keras model
-            model.add(Dense(12, input_dim=8, activation='relu'))
-            model.add(Dropout(0.5))
-            model.add(Dense(8, activation='relu'))
-            model.add(Dropout(0.5))
-            model.add(Dense(1, activation='sigmoid'))
+            Models.model.add(Dense(12, input_dim=8, activation='relu'))
+            Models.model.add(Dropout(0.5))
+            Models.model.add(Dense(8, activation='relu'))
+            Models.model.add(Dropout(0.5))
+            Models.model.add(Dense(1, activation='sigmoid'))
 
         else:
             # define keras model
-            model.add(Dense(12, kernel_regularizer=regularizers.l2(0.01),
-                            input_dim=8, activation='relu'))
-            model.add(Dense(8, kernel_regularizer=regularizers.l2(0.01),
-                            activation='relu'))
-            model.add(Dense(1, activation='sigmoid'))
+            Models.model.add(Dense(12, kernel_regularizer=regularizers.l2(0.01),
+                                   input_dim=8, activation='relu'))
+            Models.model.add(Dense(8, kernel_regularizer=regularizers.l2(0.01),
+                                   activation='relu'))
+            Models.model.add(Dense(1, activation='sigmoid'))
 
             # compile keras model
-            model.compile(loss=loss,
-                          optimizer=optimizer,
-                          metrics=metrics)
+            Models.model.compile(loss=loss,
+                                 optimizer=optimizer,
+                                 metrics=metrics)
 
             print('Training started....')
             print("Debug:2")
@@ -117,10 +127,28 @@ class Models(object):
             print(Models.target_df)
 
             # fit keras model to data
-            model.fit(Models.prepared_features, Models.target_df, epochs=epochs,
-                      batch_size=batch_size, verbose=verbose)
+            Models.history = Models.model.fit(Models.prepared_features, Models.target_df,
+                                              epochs=epochs, batch_size=batch_size, verbose=verbose)
 
             print('Training completed')
+            print("Debug:3")
+            print(Models.model)
+            Models.get_score()
+
+    def get_score():
+        """returns training or test score"""
+        print("Debug4")
+        print(Models.model)
+        _, score = Models.model.evaluate(Models.prepared_features, Models.target_df)
+        train_loss = Models.history.history["loss"][-1]
+        """save best score"""
+        Models.best_score = score*100
+        print('Train Score: %.2f' % (score*100))
+        print('Train Loss: %.2f' % train_loss)
+        """save test score"""
+        _, score = Models.model.evaluate(Models.test_prepared_features, Models.test_target_df)
+        Models.test_score = score * 100
+        print('test Score: %.2f' % (score * 100))
 
 
 if __name__ == "__main__":
