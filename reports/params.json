@@ -1,0 +1,7 @@
+{
+    "loss": "binary_crossentropy",
+    "optimizer": "adam",
+    "epochs": 10,
+    "batch_size": 10,
+    "dropout": false
+}
