@@ -13,5 +13,6 @@ dvc
 numpy
 pandas
 sklearn
+tensorflow
 
 
