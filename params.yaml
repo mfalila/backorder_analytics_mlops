@@ -48,8 +48,9 @@ mlflow_config:
   test_score_metric_name: test_recall
   tf_saved_model_dir: ./models
   artifact_path: model
+  save_model_path: ./prediction_service/model
 
-model_dir: "models2"
+model_dir: models/clf_checkpoint.jolib
 
 model_webapp_dir: webapp/model_webapp_dir/model.joblib
 
