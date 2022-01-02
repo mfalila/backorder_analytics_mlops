@@ -1,0 +1,117 @@
+schema: '2.0'
+stages:
+  raw_dataset_creation:
+    cmd: python3 src/data/load_data.py --config=params.yaml
+    deps:
+    - path: data/external/balanced.csv
+      md5: f3e200acdb6569faa439e6686c9f390f
+      size: 18788604
+    - path: src/data/load_data.py
+      md5: 3d4cf209418a6df8a818d5469958d28b
+      size: 1474
+    outs:
+    - path: data/raw/balanced.csv
+      md5: bf8fb8261f6383897d5e425f58a0b710
+      size: 18748265
+      isexec: true
+  split_data:
+    cmd: python3 src/data/split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/balanced.csv
+      md5: bf8fb8261f6383897d5e425f58a0b710
+      size: 18748265
+    - path: src/data/split_data.py
+      md5: ef0f951124a79081ba98a10d9eaa3c83
+      size: 1410
+    outs:
+    - path: data/processed/backorder_test.csv
+      md5: 316af557684b55218e98d5f9deb3539e
+      size: 3749872
+      isexec: true
+    - path: data/processed/backorder_train.csv
+      md5: 0b634ce86bcdad981b762d363896e249
+      size: 14996086
+      isexec: true
+  transform_data:
+    cmd: python3 src/data/transform_data.py --config=params.yaml
+    deps:
+    - path: data/processed/backorder_test.csv
+      md5: 316af557684b55218e98d5f9deb3539e
+      size: 3749872
+    - path: data/processed/backorder_train.csv
+      md5: 0b634ce86bcdad981b762d363896e249
+      size: 14996086
+    - path: src/data/transform_data.py
+      md5: 299735b19d63b3f69bdbe14b43e8e31f
+      size: 5937
+    outs:
+    - path: data/processed/preprocessing_pipeline.joblib
+      md5: 55ed9b279e175e163c332bfe689020e7
+      size: 2609475
+      isexec: true
+    - path: data/processed/transformed_data.npy
+      md5: 621e2b6200b0154de1e0a159b5c29ef3
+      size: 2317760
+      isexec: true
+    - path: data/processed/transformed_target.npy
+      md5: de4b3b2ed021f3148210008d505058f7
+      size: 289832
+      isexec: true
+    - path: data/processed/transformed_test_data.npy
+      md5: 1213fc0a48b8338a3e8725e1f943dfd5
+      size: 579584
+      isexec: true
+    - path: data/processed/transformed_test_target.npy
+      md5: 720614cca18465446effdd57bcc49bbd
+      size: 72560
+      isexec: true
+  model_train:
+    cmd: python3 src/models/train_model.py --config=params.yaml
+    deps:
+    - path: data/processed/preprocessing_pipeline.joblib
+      md5: 55ed9b279e175e163c332bfe689020e7
+      size: 2609475
+    - path: data/processed/transformed_data.npy
+      md5: 621e2b6200b0154de1e0a159b5c29ef3
+      size: 2317760
+    - path: data/processed/transformed_target.npy
+      md5: de4b3b2ed021f3148210008d505058f7
+      size: 289832
+    - path: data/processed/transformed_test_data.npy
+      md5: 1213fc0a48b8338a3e8725e1f943dfd5
+      size: 579584
+    - path: data/processed/transformed_test_target.npy
+      md5: 720614cca18465446effdd57bcc49bbd
+      size: 72560
+    - path: src/models/train_model.py
+      md5: 7b8a0ebcbcac880d8fcda4572bf6cc0a
+      size: 13560
+    params:
+      params.yaml:
+        train_and_evaluate_config.batch_size: 10
+        train_and_evaluate_config.dropout: false
+        train_and_evaluate_config.epochs: 10
+        train_and_evaluate_config.loss: binary_crossentropy
+        train_and_evaluate_config.metrics: Recall
+        train_and_evaluate_config.optimizer: adam
+        train_and_evaluate_config.verbose: 1
+  log_production_model:
+    cmd: python3 src/models/production_model_selection.py --config=params.yaml
+    deps:
+    - path: src/models/production_model_selection.py
+      md5: cd4960ad48ab74033226b7cb9f8ac5dd
+      size: 2011
+    params:
+      params.yaml:
+        train_and_evaluate_config.batch_size: 10
+        train_and_evaluate_config.dropout: false
+        train_and_evaluate_config.epochs: 10
+        train_and_evaluate_config.loss: binary_crossentropy
+        train_and_evaluate_config.metrics: Recall
+        train_and_evaluate_config.optimizer: adam
+        train_and_evaluate_config.verbose: 1
+    outs:
+    - path: prediction_service/model
+      md5: deb359b827a050a8021c84dfd568c66f.dir
+      size: 2766159
+      nfiles: 11

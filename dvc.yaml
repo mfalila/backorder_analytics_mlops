@@ -1,0 +1,63 @@
+stages:
+  raw_dataset_creation:
+    cmd: python3 src/data/load_data.py --config=params.yaml
+    deps:
+    - src/data/load_data.py
+    - data/external/balanced.csv
+    outs:
+    - data/raw/balanced.csv
+
+  split_data:
+    cmd: python3 src/data/split_data.py --config=params.yaml
+    deps:
+    - src/data/split_data.py
+    - data/raw/balanced.csv
+    outs:
+    - data/processed/backorder_train.csv
+    - data/processed/backorder_test.csv
+
+  transform_data:
+    cmd: python3 src/data/transform_data.py --config=params.yaml
+    deps:
+    - src/data/transform_data.py
+    - data/processed/backorder_train.csv
+    - data/processed/backorder_test.csv
+    outs:
+    - data/processed/preprocessing_pipeline.joblib
+    - data/processed/transformed_data.npy
+    - data/processed/transformed_target.npy
+    - data/processed/transformed_test_data.npy
+    - data/processed/transformed_test_target.npy
+
+  model_train:
+    cmd: python3 src/models/train_model.py --config=params.yaml
+    deps:
+     - src/models/train_model.py
+     - data/processed/preprocessing_pipeline.joblib
+     - data/processed/transformed_data.npy
+     - data/processed/transformed_target.npy
+     - data/processed/transformed_test_data.npy
+     - data/processed/transformed_test_target.npy
+    params:
+     - train_and_evaluate_config.loss
+     - train_and_evaluate_config.optimizer
+     - train_and_evaluate_config.epochs
+     - train_and_evaluate_config.batch_size
+     - train_and_evaluate_config.verbose
+     - train_and_evaluate_config.dropout
+     - train_and_evaluate_config.metrics
+
+  log_production_model:
+    cmd: python3 src/models/production_model_selection.py --config=params.yaml
+    deps:
+      - src/models/production_model_selection.py
+    params:
+      - train_and_evaluate_config.loss
+      - train_and_evaluate_config.optimizer
+      - train_and_evaluate_config.metrics
+      - train_and_evaluate_config.epochs
+      - train_and_evaluate_config.batch_size
+      - train_and_evaluate_config.dropout
+      - train_and_evaluate_config.verbose
+    outs:
+      - prediction_service/model
