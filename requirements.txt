@@ -12,4 +12,6 @@ wheel
 dvc
 numpy
 pandas
+sklearn
+
 
