@@ -1,0 +1,72 @@
+external_data_config:
+  external_data_csv: data/external/balanced.csv
+
+raw_data_config:
+  raw_data_csv: data/raw/balanced.csv
+  model_var: ['national_inv','lead_time','in_transit_qty','forecast_3_month','sales_3_month','perf_6_month_avg',
+              'deck_risk_Yes','neg_inv_balance','went_on_backorder_Yes']
+  train_test_split_ratio: 0.2
+  target: went_on_backorder_Yes
+  random_state: 777
+  new_train_data_csv: data/raw/train_new.csv
+
+processed_data_config:
+  train_data_csv: data/processed/backorder_train.csv
+  test_data_csv:  data/processed/backorder_test.csv
+
+transform_data_config:
+  sample: True
+  frac: 0.10
+  column_names: ['neg_inv_bal','low_inventory','low_intransit','high_forcast',
+                 'national_inv','lead_time','in_transit_qty','forecast_3_month',]
+  categorical_features: ['national_inv', 'in_transit_qty','forecast_3_month']
+  numerical_features: ['national_inv','lead_time','in_transit_qty','forecast_3_month']
+  transformed_data: data/processed/transformed_data.npy
+  transformed_target: data/processed/transformed_target.npy
+  transformed_test_data: data/processed/transformed_test_data.npy
+  transformed_test_target: data/processed/transformed_test_target.npy
+  transform_pipeline: data/processed/preprocessing_pipeline.joblib
+
+train_and_evaluate_config:
+  loss: "binary_crossentropy"
+  optimizer: "adam"
+  metrics: "Recall"
+  epochs: 10
+  batch_size: 10
+  dropout: False
+  verbose: 1
+
+mlflow_config:
+  artifacts_dir: artifacts
+  experiment_name: backorder_predictor_experiment_v1
+  run_name: BackorderClassifier_model
+  registered_model_name: keras_backorder_model
+  remote_server_uri: http://0.0.0.0:5000
+  artifact_repository: ./mlflow-run
+  train_score_metric_name: train_recall
+  train_loss_metric_name: train_loss
+  test_score_metric_name: test_recall
+  tf_saved_model_dir: ./models
+  artifact_path: model
+
+model_dir: "models2"
+
+model_webapp_dir: webapp/model_webapp_dir/model.joblib
+
+model_monitor:
+  target_col_name: target
+  monitor_dashboard_html: reports/data_and_target_drift_dashboard.html
+
+save_model_config:
+  checkpoint: models/clf_checkpoint.joblib
+  model_file: models/clf_model.json
+  weights_file: models/clf_model_weights.h5
+
+reports:
+  params: reports/params.json
+  scores: reports/scores.json
+
+wrapper_model_config:
+  clf_checkpoint: models/clf_checkpoint.joblib
+  clf_model: models/clf_model.json
+  clf_model_weights: models/clf_model_weights.h5
