@@ -62,7 +62,7 @@ def test_form_response_correct_range(sample_dict=input_data["correct_range"]):
 
 def test_api_response_correct_range(sample_dict=input_data["correct_range"]):
     res = api_response(sample_dict)
-    res = float((([x for x in res.values()])[0]).strip('"'))
+    #res = float((([x for x in res.values()])[0]).strip('"'))
     assert TARGET_range["min"] <= res <= TARGET_range["max"]
 
 
