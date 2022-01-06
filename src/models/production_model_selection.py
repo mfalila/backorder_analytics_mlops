@@ -2,7 +2,8 @@ import os
 import mlflow
 import argparse
 from pprint import pprint
-from train_model import read_params
+import src.data.load_data
+#from train_model import read_params
 from mlflow.tracking import MlflowClient
 from tensorflow.python.saved_model import signature_constants
 
@@ -11,7 +12,7 @@ key = signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY
 
 
 def log_production_model(config_path):
-    config = read_params(config_path)
+    config = src.data.load_data.read_params(config_path)
     mlflow_config = config["mlflow_config"]
     model_name = mlflow_config["registered_model_name"]
     save_model_path = mlflow_config["save_model_path"]

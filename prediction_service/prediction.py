@@ -9,12 +9,13 @@ import tensorflow as tf
 from keras.models import model_from_json
 np.set_printoptions(precision=8, suppress=False)
 
-from src.data.load_data import read_params
+import src.data.load_data
+#from src.data.load_data import read_params
 
 params_path = "params.yaml"
 schema_path = os.path.join("prediction_service", "schema_in.json")
 
-config = read_params(params_path)
+config = src.data.load_data.read_params(params_path)
 save_model_config = config["save_model_config"]
 model_file = save_model_config["model_file"]
 checkpoint = save_model_config["checkpoint"]

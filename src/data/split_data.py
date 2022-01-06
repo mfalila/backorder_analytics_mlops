@@ -1,7 +1,7 @@
 import os
 import argparse
 import pandas as pd
-from load_data import read_params
+import load_data
 from sklearn.model_selection import train_test_split
 
 
@@ -17,7 +17,7 @@ def split_and_saved_data(config_path):
     input: config path
     output: save train and test files in output folder
     """
-    config = read_params(config_path)
+    config = load_data.read_params(config_path)
     raw_data_path = config["raw_data_config"]["raw_data_csv"]
     test_data_path = config["processed_data_config"]["test_data_csv"]
     train_data_path = config["processed_data_config"]["train_data_csv"]

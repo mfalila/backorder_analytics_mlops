@@ -1,4 +1,5 @@
-from prediction_service.prediction import form_response, api_response
+#from prediction_service.prediction import form_response, api_response
+import prediction_service.prediction
 import prediction_service
 
 import pandas as pd
@@ -56,12 +57,12 @@ TARGET_range = {
 def test_form_response_correct_range(sample_dict=input_data["correct_range"]):
     sample_list = [sample_dict]  # convert to list
     sample_df = pd.DataFrame(data=sample_list)
-    res = form_response(sample_df)
+    res = prediction_service.prediction.form_response(sample_df)
     assert TARGET_range["min"] <= res[0, 0] <= TARGET_range["max"]
 
 
 def test_api_response_correct_range(sample_dict=input_data["correct_range"]):
-    res = api_response(sample_dict)
+    res = prediction_service.prediction.api_response(sample_dict)
     #res = float((([x for x in res.values()])[0]).strip('"'))
     assert TARGET_range["min"] <= res <= TARGET_range["max"]
 
@@ -69,15 +70,15 @@ def test_api_response_correct_range(sample_dict=input_data["correct_range"]):
 def test_form_response_incorrect_range(sample_dict=input_data["incorrect_range"]):
     sample_list = [sample_dict]  # convert to list
     sample_df = pd.DataFrame(data=sample_list)
-    res = form_response(sample_df)
+    res = prediction_service.prediction.form_response(sample_df)
     pytest.raises(prediction_service.prediction.NotInRange)
 
 
 def test_api_response_incorrect_range(sample_dict=input_data["incorrect_range"]):
-    res = api_response(sample_dict)
+    res = prediction_service.prediction.api_response(sample_dict)
     assert res["response"] == prediction_service.prediction.NotInRange().message
 
 
 def test_api_response_incorrect_col(sample_dict=input_data["incorrect_col"]):
-    res = api_response(sample_dict)
+    res = prediction_service.prediction.api_response(sample_dict)
     assert res["response"] == prediction_service.prediction.NotInCols().message

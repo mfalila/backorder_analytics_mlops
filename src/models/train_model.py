@@ -15,7 +15,8 @@ import argparse
 import numpy as np
 from urllib.parse import urlparse
 
-from src.data.load_data import read_params
+import src.data.load_data
+#from src.data.load_data import read_params
 from numpy import load
 import joblib
 import json
@@ -162,7 +163,7 @@ class Models(object):
         """
         Gets saved params
         """
-        config = read_params(config_path)
+        config = src.data.load_data.read_params(config_path)
         train_and_evaluate_config = config["train_and_evaluate_config"]
         transform_data_config = config["transform_data_config"]
         loss = train_and_evaluate_config["loss"]

@@ -9,14 +9,22 @@ import argparse
 import pandas as pd
 
 from numpy import save
-from load_data import read_params
+import load_data
 import joblib
 
 from sklearn.pipeline import FeatureUnion, Pipeline
 
-from build_library.utils import FeatureSelector, CategoricalFeatsAdded,\
-RemoveNegativeValues, SimpleImputerTransformer, \
-CapOutliers, DelUnusedCols
+import build_library.utils
+#import build_library.utils.FeatureSelector
+#import build_library.utils.CategoricalFeatsAdded
+#import build_library.utils.RemoveNegativeValues
+#import build_library.utils.SimpleImputerTransformer
+#import build_library.utils.CapOutliers
+#import build_library.utils.DelUnusedCols
+
+#from build_library.utils import FeatureSelector, CategoricalFeatsAdded,\
+#RemoveNegativeValues, SimpleImputerTransformer, \
+#CapOutliers, DelUnusedCols
 
 
 class Data:
@@ -73,7 +81,7 @@ def transform_and_saved_data(config_path, test=False):
     input: data csv
     output: transformed data for modeling (a numpy array)
     """
-    config = read_params(config_path)
+    config = load_data.read_params(config_path)
     sample = config["transform_data_config"]["sample"]
     frac = config["transform_data_config"]["frac"]
     target = config["raw_data_config"]["target"]
@@ -108,15 +116,15 @@ def transform_and_saved_data(config_path, test=False):
 
     """Data transformation pipelines"""
     """define steps in the categorical pipeline"""
-    categorical_pipeline = Pipeline(steps=[('cat_selector', FeatureSelector(categorical_features)),
-                                           ('cat_feats_add', CategoricalFeatsAdded()),
-                                           ('delete_unused', DelUnusedCols(features_df))])
+    categorical_pipeline = Pipeline(steps=[('cat_selector', build_library.utils.FeatureSelector(categorical_features)),
+                                           ('cat_feats_add', build_library.utils.CategoricalFeatsAdded()),
+                                           ('delete_unused', build_library.utils.DelUnusedCols(features_df))])
     """define the steps in the numerical pipeline"""
-    numerical_pipeline = Pipeline(steps=[('num_selector', FeatureSelector(numerical_features)),
-                                         ('remove_negative_values', RemoveNegativeValues(features_df)),
+    numerical_pipeline = Pipeline(steps=[('num_selector', build_library.utils.FeatureSelector(numerical_features)),
+                                         ('remove_negative_values', build_library.utils.RemoveNegativeValues(features_df)),
                                          #('standard_trans', StandardScalerTransformer(features_df)),
-                                         ('impute_missing', SimpleImputerTransformer(features_df)),
-                                         ('cap_outliers', CapOutliers(features_df))])
+                                         ('impute_missing', build_library.utils.SimpleImputerTransformer(features_df)),
+                                         ('cap_outliers', build_library.utils.CapOutliers(features_df))])
 
     """combine numerical and categorical pipeline into one full big pipeline horizontally using FeatureUnion"""
     Data.full_pipeline = FeatureUnion(transformer_list=[('categorical_pipeline', categorical_pipeline),

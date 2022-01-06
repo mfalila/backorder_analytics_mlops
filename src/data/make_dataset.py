@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import click
 import logging
-from pathlib import Path
+import pathlib.Path
 from dotenv import find_dotenv, load_dotenv
 
 
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
     # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
+    project_dir = pathlib.Path(__file__).resolve().parents[2]
 
     # find .env automagically by walking up directories until it's found, then
     # load up the .env entries as environment variables
