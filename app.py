@@ -50,4 +50,6 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=1234, debug=True)
+    # Bind to PORT if defined, otherwise default to 5000
+    port = int(os.environ.get('PORT', 1234))
+    app.run(host="0.0.0.0", debug=True, port=port)

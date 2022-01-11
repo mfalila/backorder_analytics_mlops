@@ -1,14 +1,5 @@
 #specify base image
-# FROM ubuntu:20.04
 FROM python:3.8-slim-buster
-
-#ENV VIRTUAL_ENV=/opt/bmve/backorder_analytics_mlops
-#RUN python3 -m venv $VIRTUAL_ENV
-#ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-#install python
-# RUN apt-get -y update && apt-get install python3 -y && \
-#    apt-get --no-install-recommends -y install python3-pip -y
 
 #add metadata
 LABEL maintainer = "Sam Mfalila <sam.mfalila@gmail.com>"
@@ -16,25 +7,104 @@ LABEL maintainer = "Sam Mfalila <sam.mfalila@gmail.com>"
 #create work directory
 RUN mkdir /app
 
-#navigate to work directory
+#navigate to work dir
 WORKDIR /app
 
-# ENV PYTHONPATH="${PYTHONPATH}:/app"
-# RUN python3 -m venv venv
-#copy all files
-COPY ["setup.py", "params.yaml", "webapp/static/css/main.css","webapp/templates/404.html", "webapp/templates/base.html", "webapp/templates/index.html", "app.py", "prediction_service/model/tfmodel/clf_checkpoint.joblib", \
-  "prediction_service/model/tfmodel/clf_model_weights.h5","prediction_service/model/tfmodel/clf_model.json",\
-  "Procfile", "requirements.txt", "./"]
+#create work dir
+RUN mkdir /app/data
 
-# ENV PYTHONPATH="${PYTHONPATH}:/app"
-# ENV PYTHONPATH "${PYTHONPATH}:/mnt/e/venvs/backorder_analytics_mlops/bmve/backorder_analytics_mlops"
+#navigate to work dir
+WORKDIR /app/data
+
+#create work dir
+RUN mkdir /app/data/processed
+
+#navigate to work dir
+WORKDIR /app/data/processed
+
+#copy files
+copy ["/data/processed/preprocessing_pipeline.joblib", "./"]
+
+#exit dir
+WORKDIR ../../
+
+#create work dir
+RUN mkdir /app/build_library
+
+#navigate to work dir
+WORKDIR /app/build_library
+
+#copy files
+copy ["/build_library", "./"]
+
+#exit dir
+WORKDIR ../
+
+#create work directory
+RUN mkdir /app/models
+
+#navigate to work dir
+WORKDIR /app/models
+
+#copy files
+copy ["models/clf_model_weights.h5", "./"]
+
+#exit dir
+WORKDIR ../
+
+#create work directory
+RUN mkdir /app/webapp
+
+#navigate to work dir
+WORKDIR /app/webapp
+
+#copy files
+copy ["/webapp", "./"]
+
+#exit dir
+WORKDIR ../
+
+#create work directory
+RUN mkdir /app/src
+
+#navigate to work dir
+WORKDIR /app/src
+
+#create work dir
+RUN mkdir /app/src/data
+
+#navigate to work dir
+WORKDIR /app/src/data
+
+#copy files
+copy ["/src/data/load_data.py", "./"]
+
+#exit dir
+WORKDIR ../../
+
+#create work directory
+RUN mkdir /app/prediction_service
+
+#navigate to work dir
+WORKDIR /app/prediction_service
+
+#copy files
+copy ["/prediction_service", "./"]
+
+#exit dir
+WORKDIR ../
+
+#navigate to work dir
+WORKDIR /app
+
+#copy all files
+COPY ["setup.py", "params.yaml", "app.py", "Procfile", "requirements.txt", "./"]
+
 
 #install dependencies
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt --no-cache-dir
 
-# add PYTHONPATH
-ENV PYTHONPATH="${PYTHONPATH}:/app"
-
 #run
-CMD python3 app.py
+CMD ["python3","./app.py"]
+

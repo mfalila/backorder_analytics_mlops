@@ -59,9 +59,9 @@ model_monitor:
   monitor_dashboard_html: reports/data_and_target_drift_dashboard.html
 
 save_model_config:
-  checkpoint: models/clf_checkpoint.joblib
-  model_file: models/clf_model.json
-  weights_file: models/clf_model_weights.h5
+  checkpoint: prediction_service/model/tfmodel/clf_checkpoint.joblib
+  model_file: prediction_service/model/tfmodel/clf_model.json
+  weights_file: prediction_service/model/tfmodel/clf_model_weights.h5
 
 reports:
   params: reports/params.json

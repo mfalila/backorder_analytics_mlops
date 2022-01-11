@@ -19,8 +19,11 @@ config = src.data.load_data.read_params(params_path)
 save_model_config = config["save_model_config"]
 model_file = save_model_config["model_file"]
 checkpoint = save_model_config["checkpoint"]
+#model_weights = save_model_config["weights_file"]
+#clf_checkpoint = save_model_config["checkpoint"]
 model_weights = "models/clf_model_weights.h5"
 clf_checkpoint = "data/processed/preprocessing_pipeline.joblib"
+
 
 
 class NotInRange(Exception):

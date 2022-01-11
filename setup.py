@@ -1,6 +1,5 @@
 from setuptools import find_packages, setup
 
-# path_to_my_project = "/mnt/e/venvs/backorder_analytics_mlops/bmve/backorder_analytics_mlops"
 
 setup(
     name='src',
