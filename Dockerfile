@@ -114,6 +114,18 @@ copy ["/prediction_service/__init__.py","/prediction_service/prediction.py","/pr
 #exit dir
 WORKDIR ../
 
+#create work directory
+RUN mkdir /app/tests
+
+#navigate to work dir
+WORKDIR /app/tests
+
+#copy files
+copy ["/tests/__init__.py","/tests/test_config.py", "./"]
+
+#exit dir
+WORKDIR ../
+
 #navigate to work dir
 WORKDIR /app
 
