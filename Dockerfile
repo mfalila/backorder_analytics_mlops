@@ -88,8 +88,26 @@ RUN mkdir /app/prediction_service
 #navigate to work dir
 WORKDIR /app/prediction_service
 
+#create work directory
+RUN mkdir /app/prediction_service/model
+
+#navigate to work dir
+WORKDIR /app/prediction_service/model
+
+#create work directory
+RUN mkdir /app/prediction_service/model/tfmodel
+
+#navigate to work dir
+WORKDIR /app/prediction_service/model/tfmodel
+
 #copy files
-copy ["/prediction_service", "./"]
+copy ["clf_checkpoint.joblib","clf_model.json","clf_model_weights.h5", "./"]
+
+#exit dir
+WORKDIR ../../
+
+#copy files
+copy ["__init__.py","prediction.py","schema_in.json", "./"]
 
 #exit dir
 WORKDIR ../
