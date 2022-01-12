@@ -101,15 +101,15 @@ RUN mkdir /app/prediction_service/model/tfmodel
 WORKDIR /app/prediction_service/model/tfmodel
 
 #copy files
-copy ["prediction_service/model/tfmodel/clf_checkpoint.joblib",\
-"prediction_service/model/tfmodel/clf_model.json", \
-"prediction_service/model/tfmodel/clf_model_weights.h5", "./"]
+copy ["/prediction_service/model/tfmodel/clf_checkpoint.joblib",\
+"/prediction_service/model/tfmodel/clf_model.json", \
+"/prediction_service/model/tfmodel/clf_model_weights.h5", "./"]
 
 #exit dir
 WORKDIR ../../
 
 #copy files
-copy ["prediction_service/__init__.py","prediction_service/prediction.py","prediction_service/schema_in.json", "./"]
+copy ["/prediction_service/__init__.py","/prediction_service/prediction.py","/prediction_service/schema_in.json", "./"]
 
 #exit dir
 WORKDIR ../
