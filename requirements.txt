@@ -17,4 +17,5 @@ tensorflow
 keras
 pytest
 flask
+# evidently #uncomment only if needed as takes long to install
 
