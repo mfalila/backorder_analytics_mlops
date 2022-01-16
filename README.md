@@ -26,11 +26,11 @@ Project Organization
 
     ├── LICENSE
     ├── README.md                 <- The top-level README for developers using this project.
-    ├──.dvc
+    ├── .dvc
     ├── .github                   <- Scripts to perform automatic deployment to Heroku PAAS
     |    └── workflows
     |        └── ci-cd.yaml       <- Continuous intergration and continuous deployment pipeline with github actions
-    ├──build_library
+    ├── build_library
     |    ├── __init__.py          <- Makes build_library a Python module
     |    └── utils.py             <- Utility scripts   
     ├── data
