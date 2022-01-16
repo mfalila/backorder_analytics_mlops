@@ -10,7 +10,7 @@ End to End Machine learning pipeline with MLOps tools
 In this project, we build an end-to-end machine learning operations (MLOps) pipeline with open-source tools. Here I extend the backorder predictor project by adding an mlops pipeline to deploy the backorder model in production. The resulting pipeline will check for data drift whenever new training data is received, retrain the model using the new training dataset, and automatically deploy to production the best performing model.  
 We use the tools below:
 
-- Cookiecutter:                  <- to set the project’s structure
+- Cookiecutter                   <- to set the project’s structure
 - Data Version Control(dvc)      <- handles version control of data assets
 - GitHub                         <- handles code version control
 - GitHub Actions                 <- for building a ci-cd pipeline
@@ -97,5 +97,5 @@ Project Organization
     
     
     
---------
+# Deployment
 
