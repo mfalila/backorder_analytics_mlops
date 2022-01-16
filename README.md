@@ -1,7 +1,7 @@
 Backorder_Analytics_MLOps
 ==============================
 
-End to End Machine learning pipeline with MLOps tools
+End to End Machine learning pipeline with open-source MLOps tools
 
 <p align="center">
   <img width="1600" height="800" src="images/logos.PNG">
