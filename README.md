@@ -3,6 +3,11 @@ Backorder_Analytics_MLOps
 
 End to End Machine learning pipeline with MLOps tools
 
+<p align="center">
+  <img width="1600" height="200" src="images/logos.PNG">
+</p>
+
+
 Project Organization
 ------------
 
