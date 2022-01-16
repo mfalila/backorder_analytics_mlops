@@ -1,4 +1,4 @@
-backorder_analytics_mlops
+Backorder_Analytics_MLOps
 ==============================
 
 End to End Machine learning pipeline with MLOps tools
