@@ -14,11 +14,11 @@ We use the tools below:
 - Data Version Control(dvc)      <- handles version control of data assets
 - GitHub                         <- handles code version control
 - GitHub Actions                 <- for building a ci-cd pipeline
-- MLFlow 	                      <- for model version control
+- MLFlow 	                       <- for model version control
 - Heroku                         <- to deploy best model as web app/ API
 - Flask                          <- to create web app/ API
 - Evidently                      <- to monitor deployed production model
-- Pytest                        <- to perform application unit tests
+- Pytest                         <- to perform application unit tests
 
 
 Project Organization
