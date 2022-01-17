@@ -100,3 +100,6 @@ Project Organization
 # Deployment
 
 The final deployed production model can be accessed from **[Backorder Predictor API](https://backorder-analytics-production.herokuapp.com/)**
+
+Here a user can request predictions by either sending model inputs through completing the web form or by sending an api post request to https://backorder-analytics-production.herokuapp.com/ in a json format.
+
