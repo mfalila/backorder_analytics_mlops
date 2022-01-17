@@ -16,7 +16,6 @@ import numpy as np
 from urllib.parse import urlparse
 
 import src.data.load_data
-#from src.data.load_data import read_params
 from numpy import load
 import joblib
 import json

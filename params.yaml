@@ -16,7 +16,7 @@ processed_data_config:
 
 transform_data_config:
   sample: True
-  frac: 0.10
+  frac: 0.20
   column_names: ['neg_inv_bal','low_inventory','low_intransit','high_forcast',
                  'national_inv','lead_time','in_transit_qty','forecast_3_month',]
   categorical_features: ['national_inv', 'in_transit_qty','forecast_3_month']

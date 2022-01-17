@@ -1,0 +1,7 @@
+mlflow
+fsspec==2021.11.1
+keras==2.7.0
+pandas==1.3.5
+pydot==1.4.2
+scipy==1.7.3
+tensorflow==2.7.0
