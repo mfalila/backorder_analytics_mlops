@@ -7,7 +7,7 @@ End to End Machine learning pipeline with open-source MLOps tools
   <img width="1600" height="700" src="images/logos.PNG">
 </p>
 
-In this project, we build an end-to-end machine learning operations (MLOps) pipeline with open-source tools. Here we extend the **[backorder predictor project](https://github.com/mfalila/Supply_Chain_Analytics)** by adding an mlops pipeline to deploy the backorder model in production. The resulting pipeline will check for data drift whenever new training data is received, retrain the model using the new training dataset, and automatically deploy to production the best performing model.  
+In this project, we build an end-to-end machine learning operations (MLOps) pipeline with open-source tools. Here we extend the **[backorder predictor project](https://github.com/mfalila/Supply_Chain_Analytics)** by adding an mlops pipeline to deploy the backorder model in production. The resulting pipeline will **[check for data drift](https://backorder-analytics-production.herokuapp.com/)** whenever new training data is received, retrain the model using the new training dataset, and automatically deploy to production the best performing model.  
 We use the tools below:
 
 - Cookiecutter                   <- to set the project’s structure
