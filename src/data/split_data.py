@@ -23,8 +23,16 @@ def split_and_saved_data(config_path):
     train_data_path = config["processed_data_config"]["train_data_csv"]
     split_ratio = config["raw_data_config"]["train_test_split_ratio"]
     random_state = config["raw_data_config"]["random_state"]
-    raw_df = pd.read_csv(raw_data_path)
-    split_data(raw_df, train_data_path, test_data_path, split_ratio, random_state)
+
+    try:
+        assert isinstance(split_ratio, float), "Test set fraction must be a floating point number"
+        assert split_ratio < 1.0, "Test set fraction must be between 0.0 and 1.0"
+        assert split_ratio > 0, "Test set fraction must be between 0.0 and 1.0"
+        raw_df = pd.read_csv(raw_data_path)
+        split_data(raw_df, train_data_path, test_data_path, split_ratio, random_state)
+    except AssertionError as msg:
+        print(msg)
+        return msg
 
 
 if __name__ == "__main__":
