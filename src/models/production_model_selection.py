@@ -3,7 +3,6 @@ import mlflow
 import argparse
 from pprint import pprint
 import src.data.load_data
-#from train_model import read_params
 from mlflow.tracking import MlflowClient
 from tensorflow.python.saved_model import signature_constants
 
@@ -56,3 +55,4 @@ if __name__ == '__main__':
     args.add_argument("--config", default="params.yaml")
     parsed_args = args.parse_args()
     data = log_production_model(config_path=parsed_args.config)
+
