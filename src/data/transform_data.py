@@ -5,27 +5,12 @@ import sys
 sys.path.insert(0, "../../")
 
 import argparse
-
 import pandas as pd
-
 from numpy import save
 import load_data
 import joblib
-
 from sklearn.pipeline import FeatureUnion, Pipeline
-
-#import build_library
 import build_library.utils
-#import build_library.utils.FeatureSelector
-#import build_library.utils.CategoricalFeatsAdded
-#import build_library.utils.RemoveNegativeValues
-#import build_library.utils.SimpleImputerTransformer
-#import build_library.utils.CapOutliers
-#import build_library.utils.DelUnusedCols
-
-#from build_library.utils import FeatureSelector, CategoricalFeatsAdded,\
-#RemoveNegativeValues, SimpleImputerTransformer, \
-#CapOutliers, DelUnusedCols
 
 
 class Data:
@@ -123,7 +108,6 @@ def transform_and_saved_data(config_path, test=False):
     """define the steps in the numerical pipeline"""
     numerical_pipeline = Pipeline(steps=[('num_selector', build_library.utils.FeatureSelector(numerical_features)),
                                          ('remove_negative_values', build_library.utils.RemoveNegativeValues(features_df)),
-                                         #('standard_trans', StandardScalerTransformer(features_df)),
                                          ('impute_missing', build_library.utils.SimpleImputerTransformer(features_df)),
                                          ('cap_outliers', build_library.utils.CapOutliers(features_df))])
 
