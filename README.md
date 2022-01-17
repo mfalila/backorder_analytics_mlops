@@ -103,4 +103,4 @@ The final deployed production model can be accessed from **[Backorder Predictor 
 
 Here a user can request predictions by either sending model inputs through completing the web form or by sending an api post request to https://backorder-analytics-production.herokuapp.com/ in a json format.
 
-The model returns a probability between 0 and 1 that an inventory item will either backorder or not were a probability < 0.5 indicates the item will backorder and backorder > 0.5 indicates the item will not backorder.
+The model returns a probability between 0 and 1 that an inventory item will either backorder or not such that probability < 0.5 indicates the item will backorder and backorder > 0.5 indicates the item will not backorder.
