@@ -38,7 +38,14 @@ def load_raw_data(config_path):
     model_var = config["raw_data_config"]["model_var"]
 
     df = load_data(external_data_path, model_var)
-    df.to_csv(raw_data_path, index=False)
+    try:
+        assert df.isnull().values.any() #df should have no missing values
+        assert df.apply(lambda s: pd.to_numeric(s, errors='coerce').notnull.all()) #df should only have numeric values
+
+        df.to_csv(raw_data_path, index=False)
+    except AssertionError as msg:
+        print(msg)
+        return msg
 
 
 if __name__ == "__main__":
