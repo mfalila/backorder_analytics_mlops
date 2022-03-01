@@ -36,8 +36,8 @@ def index():
             elif request.json:
                 response = prediction_service.prediction.api_response(request.json)
                 response = json.dumps(str(response))
-                response = {"response": response}
-                #return jsonify(response)
+                # ###response = {"response": response}
+                # ###return jsonify(response)
                 return response
         except Exception as e:
             print(e)
