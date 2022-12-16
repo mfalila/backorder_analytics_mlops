@@ -17,5 +17,6 @@ tensorflow
 keras
 pytest
 flask
+joblib
 # evidently #uncomment only if needed as takes long to install
 
