@@ -19,7 +19,7 @@ def load_data(data_path, model_var):
     load csv dataset from given path
     input: csv path
     output:pandas dataframe
-    note: Only selected variables are used in this model building stage for the simplicity.
+    note: Only selected variables are used in this model building stage for simplicity.
     """
     df = pd.read_csv(data_path, sep=",", encoding='utf-8')
     df = df[model_var]
