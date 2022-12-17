@@ -12,7 +12,8 @@ wheel
 dvc
 numpy
 pandas
-sklearn
+# sklearn
+scikit-learn
 tensorflow
 keras
 pytest
