@@ -23,7 +23,8 @@ app = Flask(__name__,
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == "POST":
+    #if request.method == "POST":
+    if request.method == "GET":
         try:
             if request.form:
                 dict_req = dict(request.form)

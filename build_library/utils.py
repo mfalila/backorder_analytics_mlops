@@ -19,7 +19,8 @@ from sklearn.model_selection import train_test_split
 
 args = argparse.ArgumentParser()
 args.add_argument("--config", default="params.yaml")
-parsed_args = args.parse_args()
+##parsed_args = args.parse_args()
+parsed_args, unknown = args.parse_known_args()
 config_path = parsed_args.config
 
 config = read_params(config_path)
